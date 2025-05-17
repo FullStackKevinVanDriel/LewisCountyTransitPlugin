@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Lewis County Transit Route Planner
-Version: 0.1.31-alpha
+Version: 0.1.32-alpha
 Description: A transit route planner for Lewis County, WA using Google Maps transit (Proof of Concept).
 Author: Web Design By Mark
 Author URI: https://webdesignbymark.com
@@ -95,3 +95,45 @@ function trp_settings_page() {
     </div>
     <?php
 }
+
+// Provide plugin details for the "View Details" link
+add_filter('plugins_api', function ($result, $action, $args) {
+    if ($action !== 'plugin_information') {
+        return $result;
+    }
+
+    $plugin_file = plugin_basename(__FILE__);
+    if ($args->slug !== dirname($plugin_file)) {
+        return $result;
+    }
+
+    // Use cached response
+    $cache_key = 'trp_github_update_check';
+    $release = get_transient($cache_key);
+    if (!$release) {
+        return $result;
+    }
+
+    $remote_version = ltrim($release->tag_name, 'v');
+
+    // Fetch plugin header data to avoid hardcoding
+    $plugin_data = get_plugin_data(__FILE__);
+
+    $result = new stdClass();
+    $result->name = $plugin_data['Name'];
+    $result->slug = $args->slug;
+    $result->version = $remote_version;
+    $result->author = $plugin_data['Author'];
+    $result->homepage = $plugin_data['PluginURI'];
+    $result->download_link = $release->zipball_url ?? '';
+    $result->sections = [
+        'description' => $plugin_data['Description'],
+        'changelog' => $release->body ?? 'No changelog provided.'
+    ];
+    $result->banners = [
+        'low' => '',
+        'high' => ''
+    ];
+
+    return $result;
+}, 20, 3);
