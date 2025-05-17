@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Lewis County Transit Route Planner
-Version: 0.1.33-alpha
-Description: A transit route planner for Lewis County, WA using Google Maps transit (Proof of Concept).
-Author: Web Design By Mark
+Version: 0.1.34-alpha
+Description: A transit route planner using Google Maps transit (Proof of Concept).
+Author: Kevin A. VanDriel
 Author URI: https://webdesignbymark.com
 Plugin URI: https://github.com/FullStackKevinVanDriel/LewisCountyTransitPlugin
 */
