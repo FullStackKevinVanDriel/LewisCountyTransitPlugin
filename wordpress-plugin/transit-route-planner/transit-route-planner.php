@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: Lewis County Transit Route Planner
+Plugin Name: Transit Route Planner
 Version: 0.1.34-alpha
 Description: A transit route planner using Google Maps transit (Proof of Concept).
 Author: Kevin A. VanDriel
-Author URI: https://webdesignbymark.com
+Author URI: https://vandromeda.com
 Plugin URI: https://github.com/FullStackKevinVanDriel/LewisCountyTransitPlugin
 */
 
@@ -151,7 +151,7 @@ add_filter('site_transient_update_plugins', function ($transient) {
     $comparison_result = version_compare($remote_version, $current_version, '>');
     error_log('TRP Update Check - Is Remote Newer? ' . ($comparison_result ? 'Yes' : 'No'));
 
-   if ($comparison_result) {
+    if ($comparison_result) {
         $existing_response = isset($transient->response) ? (array) $transient->response : [];
         $existing_response[$plugin_file] = (object) [
             'id' => $plugin_file,
@@ -159,7 +159,7 @@ add_filter('site_transient_update_plugins', function ($transient) {
             'plugin' => $plugin_file,
             'new_version' => $remote_version,
             'url' => 'https://github.com/FullStackKevinVanDriel/LewisCountyTransitPlugin',
-            'package' => $release->assets[0]->browser_download_url ?? '', // Use the uploaded asset URL
+            'package' => $release->assets[0]->browser_download_url ?? '',
             'tested' => '6.5',
             'requires' => '5.0',
             'requires_php' => '7.0',
@@ -203,7 +203,7 @@ add_filter('plugins_api', function ($result, $action, $args) {
     $result->version = $remote_version;
     $result->author = $plugin_data['Author'];
     $result->homepage = $plugin_data['PluginURI'];
-    $result->download_link = $release->zipball_url ?? '';
+    $result->download_link = $release->assets[0]->browser_download_url ?? '';
     $result->sections = [
         'description' => $plugin_data['Description'],
         'changelog' => $release->body ?? 'No changelog provided.'

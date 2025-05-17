@@ -59,7 +59,7 @@ sed -i "s/Version: [0-9]\+\.[0-9]\+\.[0-9]\+-alpha/Version: $NEW_VERSION/g" "$PH
 echo "Updated version in $PHP_FILE to Version: $NEW_VERSION"
 
 # Ensure Author URI and Plugin URI are in the header
-AUTHOR_URI="Author URI: https://webdesignbymark.com"
+AUTHOR_URI="Author URI: https://vandromeda.com"
 PLUGIN_URI="Plugin URI: https://github.com/FullStackKevinVanDriel/LewisCountyTransitPlugin"
 
 sed -i "/Owner:/d" "$PHP_FILE"
